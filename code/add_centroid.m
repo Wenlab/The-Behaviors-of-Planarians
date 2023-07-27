@@ -2,7 +2,7 @@ clc; clear; close all;
 
 % read
 folder_name = 'F:\1_learning\research\planarian\data\20230716 preliminary';
-file_name = '20230716_2315.avi';
+file_name = '20230716_2305.avi';
 full_path = fullfile(folder_name,file_name);
 video = VideoReader(full_path);
 
@@ -13,6 +13,7 @@ open(output_video);
 
 % exclude background
 mask_of_background = get_mask_of_background(video);
+% imshow(mask_of_background);
 
 % centroid distance threshold
 distance_threshold = 100;  % Set this according to your specific video
@@ -36,6 +37,10 @@ while hasFrame(video)
 
     %% save
     writeVideo(output_video, binary_frame_RGB);
+
+    % if video.currentTime > 100
+    %     break;
+    % end
 
 end
 close(output_video);

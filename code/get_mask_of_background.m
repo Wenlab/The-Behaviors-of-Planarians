@@ -4,7 +4,7 @@ function mask_of_background = get_mask_of_background(video)
     numSampleFrames = 10;
 
     % Select frames
-    frameNumbers = round(linspace(1, video.NumFrames, numSampleFrames));
+    frameNumbers = round(linspace(100, video.NumFrames-100, numSampleFrames));
 
     % Initialize mask
     mask_of_background = true(video.Height, video.Width);
@@ -19,7 +19,7 @@ function mask_of_background = get_mask_of_background(video)
 
         % Pre-process
         grayFrame = rgb2gray(frame);
-        sensitivity_threshold = 0.4;
+        sensitivity_threshold = 0.4; % higher, more 1 pixels
         binaryFrame = imbinarize(grayFrame, 'adaptive', 'Sensitivity', sensitivity_threshold);
 
         % Merge this frame's binary image with the overall mask
