@@ -1,0 +1,40 @@
+clc; clear; close all;
+
+% read
+folder_name = 'F:\1_learning\research\planarian\data\20230716 preliminary';
+file_name = '20230716_2315.avi';
+full_path = fullfile(folder_name,file_name);
+video = VideoReader(full_path);
+
+% save
+outputVideoFile = strrep(full_path,'.avi','_binarized_v4.mp4');
+outputVideo = VideoWriter(outputVideoFile, 'MPEG-4');
+open(outputVideo);
+
+% exclude background
+mask_of_background = createExclusionMask(video);
+
+% centroid distance threshold
+distance_threshold = 100;  % Set this according to your specific video
+
+% initialize
+video.currentTime = 0;
+count_frame = 0;
+trajectories = {};  % Initialize to empty cell array
+hasSuccessor = [];  % Initialize to empty array
+
+% loop
+while hasFrame(video)
+    count_frame = count_frame + 1;
+    
+    %% get binaryFrame
+    [binary_frame,properties_screened] = get_binary_frame(video,mask_of_background);
+
+    %% draw the trajectory
+    binaryFrameRGB = draw_trajectories(trajectories,hasSuccessor,binary_frame,properties_screened);
+
+    %% save
+    writeVideo(outputVideo, binaryFrameRGB);
+end
+close(outputVideo);
+close all;
