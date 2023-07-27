@@ -1,2 +1,2 @@
 # planarian
-analysis the behavior of planarians
+Analysis the behavior of [planarians](https://en.wikipedia.org/wiki/Planarian).

@@ -18,7 +18,7 @@ mask_of_background = get_mask_of_background(video);
 distance_threshold = 100;  % Set this according to your specific video
 
 % initialize
-video.currentTime = 150;
+video.currentTime = 0;
 count_frame = 0;
 trajectories = {};  % Initialize to empty cell array
 has_successor = [];  % Initialize to empty array
@@ -37,9 +37,6 @@ while hasFrame(video)
     %% save
     writeVideo(output_video, binary_frame_RGB);
 
-    if video.currentTime > 350
-        break;
-    end
 end
 close(output_video);
 close all;
