@@ -4,7 +4,8 @@ function mask_of_background = get_mask_of_background(video)
     numSampleFrames = 10;
 
     % Select frames
-    frameNumbers = round(linspace(100, video.NumFrames-100, numSampleFrames));
+    n_avoid_frames = 100; % I really don't know why 100 works for 1st video while 1 works for 2nd video.
+    frameNumbers = round(linspace(n_avoid_frames, video.NumFrames-(n_avoid_frames-1), numSampleFrames));
 
     % Initialize mask
     mask_of_background = true(video.Height, video.Width);

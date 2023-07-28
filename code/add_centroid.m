@@ -1,8 +1,8 @@
 clc; clear; close all;
 
 % read
-folder_name = 'F:\1_learning\research\planarian\data\20230716 preliminary';
-file_name = '20230716_2305.avi';
+folder_name = 'F:\1_learning\research\planarian\result\20230716\video';
+file_name = '20230716_2315.avi';
 full_path = fullfile(folder_name,file_name);
 video = VideoReader(full_path);
 
@@ -13,7 +13,7 @@ open(output_video);
 
 % exclude background
 mask_of_background = get_mask_of_background(video);
-% imshow(mask_of_background);
+imshow(mask_of_background);
 
 % centroid distance threshold
 distance_threshold = 100;  % Set this according to your specific video
@@ -25,22 +25,22 @@ trajectories = {};  % Initialize to empty cell array
 has_successor = [];  % Initialize to empty array
 is_drawed = [];
 
-% loop
+% loop to process each frame 1 by 1
 while hasFrame(video)
     count_frame = count_frame + 1;
     
     %% get binaryFrame
-    [binary_frame,properties_screened] = get_binary_frame(video,mask_of_background);
+    [binary_frame,animals_screened] = get_binary_frame(video,mask_of_background);
 
     %% draw the trajectory
-    [binary_frame_RGB,trajectories,has_successor,is_drawed] = draw_trajectories(trajectories,has_successor,binary_frame,properties_screened,distance_threshold,is_drawed);
+    [binary_frame_RGB,trajectories,has_successor,is_drawed] = draw_trajectories(trajectories,has_successor,binary_frame,animals_screened,distance_threshold,is_drawed);
 
     %% save
     writeVideo(output_video, binary_frame_RGB);
 
-    % if video.currentTime > 100
-    %     break;
-    % end
+    if video.currentTime > 100
+        break;
+    end
 
 end
 close(output_video);

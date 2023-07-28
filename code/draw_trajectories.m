@@ -1,11 +1,14 @@
-function [binary_frame_RGB,trajectories,has_successor,is_drawed] = draw_trajectories(trajectories,has_successor,binary_frame,properties_screened,distance_threshold,is_drawed)
+function [binary_frame_RGB,trajectories,has_successor,is_drawed] = draw_trajectories(trajectories,has_successor,binary_frame,animals_screened,distance_threshold,is_drawed)
 
 %% get the number of points of each trajectory
 n_point_of_each_trajectory_pre = cellfun(@(x) size(x,1),trajectories);
 
 %% get all centroids in the current frame
-current_centroids = cat(1, properties_screened.Centroid); % the 1st column is x and the 2nd column is y
+current_centroids = cat(1, animals_screened.Centroid); % the 1st column is x and the 2nd column is y
 n_current_centroid = size(current_centroids, 1);
+
+%% initialize is_connected
+is_connected = ~has_successor;
 
 %% loop to process all centroids in the current frame
 for i = 1:n_current_centroid
@@ -19,11 +22,14 @@ for i = 1:n_current_centroid
     % loop to find closest centroid among all centoird in the last frame
     for j = 1:n_trajectory
         if has_successor(j)
-            last_centroid = trajectories{j}(end, :);
-            dist = norm(current_centroid - last_centroid);
-            if dist < min_dist
-                min_dist = dist;
-                closest_centroid_idx = j;
+            if ~is_connected(j)
+                % only process trajectories which has successor and has not been connected
+                last_centroid = trajectories{j}(end, :);
+                dist = norm(current_centroid - last_centroid);
+                if dist < min_dist
+                    min_dist = dist;
+                    closest_centroid_idx = j;
+                end
             end
         end
     end
@@ -32,11 +38,12 @@ for i = 1:n_current_centroid
     if min_dist < distance_threshold
         % an animal that already exists
         trajectories{closest_centroid_idx} = [trajectories{closest_centroid_idx}; current_centroid];
-        has_successor(closest_centroid_idx) = true;
+        is_connected(closest_centroid_idx) = true;
     elseif min_dist >= distance_threshold
         % a new animal, start a new trajectory
         trajectories{end+1} = current_centroid;
         has_successor(end+1) = true;
+        is_connected(end+1) = false;
         is_drawed(end+1) = false;
     end
 
@@ -55,18 +62,20 @@ binary_frame_RGB = uint8(cat(3, binary_frame, binary_frame, binary_frame) * 255)
 
 %% draw
 for i = find(~has_successor)
-    % If the trajectory does't have a successor
+    % If the trajectory does't have a successor, color it red
     if ~is_drawed(i)
         % If the trajectory has not been drawed
+
+        % draw it for at least 1 time
         trajectory = trajectories{i};
-        path_length_sum = calculate_the_length_of_a_trajectory(trajectory);
-        length_threshold = 22*30; % 30 mm
-        if path_length_sum > length_threshold
-            binary_frame_RGB = insert_trajectory(binary_frame_RGB, trajectory, 'red');
-        else
-            binary_frame_RGB = insert_trajectory(binary_frame_RGB, trajectory, 'black');
+        binary_frame_RGB = insert_trajectory(binary_frame_RGB, trajectory, 'red');
+
+        % if the length of a trajectory is smaller than threshold, don't draw it in future frames
+        is_passed = screen_a_trajectory(trajectory);        
+        if ~is_passed
             is_drawed(i) = true;
-        end        
+        end
+
     end    
 end
 
