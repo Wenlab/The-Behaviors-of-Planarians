@@ -1,22 +1,28 @@
-image_files = dir('20230716_2315/*.jpg');  % 获取所有的.jpg文件
-image_files_names = {image_files.name}';  % 提取文件名
+clc;clear;close all;
 
-% 对文件名排序
+% get all images
+folder_name = 'F:\1_learning\research\planarian\data\20230728 test boundary\20230728_2027';
+image_files = dir(fullfile(folder_name,'*.jpg'));
+image_files_names = {image_files.name}';
+
+% sort
 [~,index] = sort(cellfun(@(x) str2double(regexprep(x, '\D', '')), image_files_names));
 sorted_image_files = image_files_names(index);
 
-% 创建一个VideoWriter对象
-video = VideoWriter('20230716_2315.avi'); % 您可以更改输出文件的名称
-video.FrameRate = 2; % 您可以更改帧率
+% create save video
+[~,save_file_name] = fileparts(folder_name);
+video = VideoWriter([save_file_name '.avi']);
+video.FrameRate = 2;
 
+% write
 open(video);
-write_into_video(sorted_image_files, video);
+write_into_video(sorted_image_files, video, folder_name);
 close(video);
 
-function write_into_video(sorted_image_files, video)
-% 循环读取图片，并写入视频
+function write_into_video(sorted_image_files, video, folder_name)
+% loop to read each image and write it into a video
 for i=1:length(sorted_image_files)
-    img = imread(['20230716_2315/' sorted_image_files{i}]);
+    img = imread(fullfile(folder_name,sorted_image_files{i}));
     writeVideo(video, img);
 end
 end

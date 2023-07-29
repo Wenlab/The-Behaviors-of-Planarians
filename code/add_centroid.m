@@ -1,8 +1,8 @@
 clc; clear; close all;
 
 % read
-folder_name = 'F:\1_learning\research\planarian\result\20230716\video';
-file_name = '20230716_2315.avi';
+folder_name = 'F:\1_learning\research\planarian\result\20230728\video';
+file_name = '20230728_2027.avi';
 full_path = fullfile(folder_name,file_name);
 video = VideoReader(full_path);
 
