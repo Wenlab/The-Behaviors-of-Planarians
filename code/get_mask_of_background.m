@@ -20,8 +20,8 @@ function mask_of_background = get_mask_of_background(video)
 
         % Pre-process
         grayFrame = rgb2gray(frame);
-        sensitivity_threshold = 0.4; % higher, more 1 pixels
-        binaryFrame = imbinarize(grayFrame, 'adaptive', 'Sensitivity', sensitivity_threshold);
+        sensitivity_threshold_for_background = 0.4; % higher, more 1 pixels
+        binaryFrame = imbinarize(grayFrame, 'adaptive', 'Sensitivity', sensitivity_threshold_for_background);
 
         % Merge this frame's binary image with the overall mask
         mask_of_background = mask_of_background & binaryFrame;

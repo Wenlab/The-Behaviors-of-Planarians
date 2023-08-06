@@ -1,6 +1,6 @@
 clc;clear;close all;
 
-% get all images
+% get all images 
 folder_name = 'F:\1_learning\research\planarian\data\20230728 test boundary\20230729_1654';
 image_files = dir(fullfile(folder_name,'*.jpg'));
 image_files_names = {image_files.name}';

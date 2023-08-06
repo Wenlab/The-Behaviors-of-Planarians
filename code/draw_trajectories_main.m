@@ -38,9 +38,9 @@ while hasFrame(video)
     %% save
     writeVideo(output_video, binary_frame_RGB);
 
-    if video.currentTime > 100
-        break;
-    end
+    % if video.currentTime > 100
+    %     break;
+    % end
 
 end
 close(output_video);
