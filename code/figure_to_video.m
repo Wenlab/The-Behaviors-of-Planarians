@@ -1,7 +1,7 @@
 clc;clear;close all;
 
 % get all images 
-folder_name = 'D:\Public_repository\planarian\data\20230808_1843';
+folder_name = 'D:\Public_repository\planarian\data\20230808_2109';
 image_files = dir(fullfile(folder_name,'*.jpg'));
 image_files_names = {image_files.name}';
 
@@ -10,12 +10,12 @@ image_files_names = {image_files.name}';
 sorted_image_files = image_files_names(index);
 
 % cut
-start_frame = 47;
+start_frame = 24;
 end_frame = size(sorted_image_files,1);
 sorted_image_files = sorted_image_files(start_frame:end_frame);
 
 % create save video
-save_folder_path = 'D:\Public_repository\planarian\result\20230808\video';  % specify your desired output directory here
+save_folder_path = 'D:\Public_repository\planarian\result\20230808';  % specify your desired output directory here
 [~,save_file_name] = fileparts(folder_name);
 save_full_path = fullfile(save_folder_path,save_file_name);
 if ~isfolder(save_folder_path)
