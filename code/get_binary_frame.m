@@ -1,4 +1,4 @@
-function [binary_frame,animals_screened] = get_binary_frame(video,mask_of_background)
+function [binary_frame,animals_screened,RGB_frame] = get_binary_frame(video,mask_of_background)
 
 % read a RGB frame
 RGB_frame = readFrame(video);

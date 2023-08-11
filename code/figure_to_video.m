@@ -17,12 +17,13 @@ sorted_image_files = sorted_image_files(start_frame:end_frame);
 % create save video
 save_folder_path = 'D:\Public_repository\planarian\result\20230808';  % specify your desired output directory here
 [~,save_file_name] = fileparts(folder_name);
+save_file_name = [save_file_name '_frame_rate_30'];
 save_full_path = fullfile(save_folder_path,save_file_name);
 if ~isfolder(save_folder_path)
     mkdir(save_folder_path);
 end
 video = VideoWriter(save_full_path,'MPEG-4');
-video.FrameRate = 2;
+video.FrameRate = 30;
 
 % write
 open(video);

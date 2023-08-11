@@ -58,7 +58,13 @@ for i = 1:length(n_point_of_each_trajectory_pre)
 end
 
 %% create an RGB version of the binary frame
-binary_frame_RGB = uint8(cat(3, binary_frame, binary_frame, binary_frame) * 255);
+if ndims(binary_frame) == 2
+    % for binary frame
+    binary_frame_RGB = uint8(cat(3, binary_frame, binary_frame, binary_frame) * 255);
+elseif ndims(binary_frame) == 3
+    % for the original frame
+    binary_frame_RGB = binary_frame;
+end
 
 %% draw
 for i = find(~has_successor)
