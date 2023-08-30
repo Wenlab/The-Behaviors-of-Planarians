@@ -1,8 +1,8 @@
 clc; clear; close all;
 
 %% read
-folder_name = 'D:\Public_repository\planarian\result\20230808\video';
-file_name = '20230808_2109_frame_rate_30.mp4';
+folder_name = 'F:\1_learning\research\planarian\result\20230808\video';
+file_name = '20230808_1906.mp4';
 full_path = fullfile(folder_name,file_name);
 video = VideoReader(full_path);
 
@@ -18,7 +18,7 @@ open(output_video_2);
 %% exclude background
 mask_of_background = get_mask_of_background(video);
 imshow(mask_of_background);
-folder_name = 'D:\Public_repository\planarian\result\20230808\background';
+folder_name = 'F:\1_learning\research\planarian\result\20230808\background';
 file_name = strrep(file_name,'.mp4','');
 full_path = fullfile(folder_name,file_name);
 saveas(gcf,full_path,'png')
@@ -56,9 +56,9 @@ while hasFrame(video)
     writeVideo(output_video_2, RGB_frame);
     
     %% using a small period to check if the code is right
-%     if video.currentTime > 5
-%         break;
-%     end
+    % if video.currentTime > 100
+    %     break;
+    % end
 
 end
 close(output_video);
