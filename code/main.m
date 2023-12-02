@@ -1,5 +1,3 @@
-% temp = dir('D:\Public_repository\planarian\data\20230808');
-% temp_2 = 
 data_folder_path = 'D:\Public_repository\planarian\data\20230808\20230808_1937';
 save_folder_path = 'D:\Public_repository\planarian\result\20230808\video';
 figure_to_video(data_folder_path,save_folder_path)
