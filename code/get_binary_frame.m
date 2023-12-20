@@ -1,3 +1,9 @@
+% Get the binary frame where only the animal is bright. Use regionprops to
+% get the animal.
+%
+% Yixuan Li, 2023-12-20
+%
+
 function [binary_frame,animals_screened,RGB_frame] = get_binary_frame(video,mask_of_background)
 
 % read a RGB frame

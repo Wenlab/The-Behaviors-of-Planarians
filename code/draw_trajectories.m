@@ -1,4 +1,10 @@
-function [binary_frame_RGB,trajectories,has_successor,is_drawed] = draw_trajectories(trajectories,has_successor,binary_frame,animals_screened,distance_threshold,is_drawed)
+% draw trajectories into a frame
+%
+% Yixuan Li, 2023-12-20
+%
+
+function [binary_frame_RGB,trajectories,has_successor,is_drawed] = draw_trajectories(trajectories,...
+    has_successor,binary_frame,animals_screened,distance_threshold,is_drawed)
 
 %% get the number of points of each trajectory
 n_point_of_each_trajectory_pre = cellfun(@(x) size(x,1),trajectories);
