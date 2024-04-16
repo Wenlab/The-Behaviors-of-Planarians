@@ -4,4 +4,4 @@ Analysis the behaviors of [planarians](https://en.wikipedia.org/wiki/Planarian).
 
 # Result
 
-<video src="README/20230716_2315_many_animals.mp4"></video>
+https://github.com/Wenlab/The-Behaviors-of-Planarians/assets/68525696/a15582fe-f937-4e22-afa4-e4a172800034
